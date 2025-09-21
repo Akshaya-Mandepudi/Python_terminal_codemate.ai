@@ -1,7 +1,7 @@
 import os
 import shutil
 import psutil   # For CPU, memory, and process monitoring
-import platform
+import platform  # For system information
 
 def list_dir():
     return "\n".join(os.listdir())
@@ -55,6 +55,9 @@ def kill_process(pid):
     except Exception as e:
         return f"Error terminating process: {str(e)}"
 
+def system_info():
+    return f"System: {platform.system()} {platform.release()} | Architecture: {platform.architecture()[0]}"
+
 def help_menu():
     return """
 Available Commands:
@@ -66,13 +69,14 @@ Available Commands:
     stats               - Show CPU and memory usage
     ps                  - List running processes
     kill <pid>          - Kill process by PID
+    info                - Show system information
     clear               - Clear the screen
     exit                - Exit terminal
     help                - Show this help menu
 """
 
 def run_terminal():
-    print("🚀 Python Command Terminal")
+    print("Python Command Terminal")
     print("Type 'help' to see available commands.")
     while True:
         try:
@@ -98,6 +102,8 @@ def run_terminal():
                 print(list_processes())
             elif cmd == "kill":
                 print(kill_process(args[0]) if args else "Usage: kill <pid>")
+            elif cmd == "info":
+                print(system_info())
             elif cmd == "clear":
                 os.system('cls' if os.name == 'nt' else 'clear')
             elif cmd == "help":
